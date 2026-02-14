@@ -1,21 +1,5 @@
-import { auth0 } from "@/lib/auth0";
-import { loginAccount, checkSupabaseConnection } from "@/lib/supabase";
-
-export default async function Home() {
-  // Check if user is authenticated
-  const session = await auth0.getSession();
-
-  if (!session) {
-    return (
-      <>
-        {/* Redirects to Auth0 to sign up */}
-        <a href="/auth/login?screen_hint=signup">Signup</a>
-        <br />
-        {/* Redirects to Auth0 to log in */}
-        <a href="/auth/login">Login</a>
-      </>
-    );
-  }
+import Task from "../components/Task"
+import Image from "next/image";
 
   return (
     <>
