@@ -1,0 +1,76 @@
+import { supabase_client } from '../lib/supabaseClient';
+
+const supabase = supabase_client
+
+export async function checkSupabaseConnection() {
+  const { data, error } = await supabase.from('users').select('')
+
+  if (error) {
+    console.error('Supabase client connection error:', error.message)
+    return false
+  } else {
+    console.log('Supabase client is working. Data received:', data)
+    return true
+  }
+}
+
+/**
+ * Logs in a user by checking if they exist in the database. If they do, it returns a greeting. If not, it registers the user and returns a message indicating a new user was created.
+ * @param {string} user_data - The email of the user to log in or register.
+ * @returns {Promise<string>} A message indicating the result of the login or registration process.
+ */
+export const loginAccount = async user_data => {
+  const active_user = await isActiveUser(user_data);
+  if (active_user) {
+    return `hello ${await getPreferedName(user_data)}`;
+  }
+  await register(user_data);
+  return 'new user created with email: ' + await getPreferedName(user_data);
+}
+
+/**
+ * checks if a user with the given email exists in the 'users' table of the database. It returns true if the user exists and false otherwise.
+ * @param {string} user_ID - The email ID of the user to check.
+ * @returns {Promise<boolean>} A boolean indicating if the user exists.
+ */
+const isActiveUser = async user_ID => {
+  const { data, error } = await supabase
+    .from('users').select('').eq('emailId', user_ID);
+  const length = data ? data.length : 0;
+  return length > 0;
+}
+
+/**
+ * Registers a new user by inserting their email into the 'users' table of the database. It returns the result of the insertion operation, including any data or errors that occur.
+ * @param {string} user_data - The email ID of the user to register.
+ * @returns {Promise<{data: any, error: any}>} The result of the registration operation.
+ */
+const register = async user_data => {
+    const prefered_name = user_data.split('@')[0];
+    const { data, error } = await supabase
+        .from('users')
+        .insert({"emailId": user_data, "balloons": null, "bundles": null, "perfName": prefered_name});
+    console.log("test: register " + data);
+    return { data, error };
+}
+
+/**
+ * gets the user data for a given email from the 'users' table in the database. It returns the user data if found, or null if no user with the given email exists.
+ * @param {*} user_email - The email ID of the user whose data is to be retrieved.
+ * @returns {Promise<Object|null>} The user data if found, or null if not found.
+ */
+export const getUserData = async user_email => {
+  const { data, error } = await supabase
+    .from('users').select("*").eq('emailId', user_email);
+  return data ? data[0] : null;
+}
+
+/**
+ * Retrieves the preferred name of a user based on their email ID. It queries the 'users' table in the database and returns the preferred name associated with the given email ID.
+ * @param {string} user_data - The email ID of the user whose preferred name is to be retrieved.
+ * @returns {Promise<string>} The preferred name of the user.
+ */
+export const getPreferedName = async user_email => {
+    const userData = await getUserData(user_email);
+    return userData ? userData.perfName : null;
+}
