@@ -26,7 +26,7 @@ export default async function Home() {
 
       {/* Display user info (name, email, etc.) */}
       <h1>User Profile</h1>
-        <pre>{loginAccount(session.user.email)}</pre>
+        {/* <pre>{loginAccount(session.user.email)}</pre> */}
 
       {/* Ends the session and redirects to Auth0 to log out */}
       <a href="/auth/logout">Logout</a>
