@@ -1,7 +1,6 @@
 import { supabase_client } from './supabaseClient';
 import { auth0 } from "../lib/auth0";
 
-
 const supabase = supabase_client
 
 let email = null;
@@ -103,3 +102,39 @@ export const checkSessionActive = async () => {
 
   return true;
 }
+
+/**
+ * Gets the 'balloons' JSON column for the current user (by email).
+ * @returns {Promise<any|null>} The balloons JSON object, or null if not found.
+ */
+export const getUserBalloons = async () => {
+  if (!email) return null;
+  const { data, error } = await supabase
+    .from('users')
+    .select('balloons')
+    .eq('emailId', email)
+    .single();
+  if (error) {
+    console.error('Error fetching balloons:', error.message);
+    return null;
+  }
+  return data ? data.balloons : null;
+};
+
+/**
+ * Sets the 'balloons' JSON column for the current user (by email).
+ * @param {any} balloons - The JSON object to set as balloons.
+ * @returns {Promise<boolean>} True if update succeeded, false otherwise.
+ */
+export const setUserBalloons = async (balloons) => {
+  if (!email) return false;
+  const { error } = await supabase
+    .from('users')
+    .update({ balloons })
+    .eq('emailId', email);
+  if (error) {
+    console.error('Error updating balloons:', error.message);
+    return false;
+  }
+  return true;
+};
