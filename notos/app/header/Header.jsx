@@ -1,11 +1,9 @@
 import React from 'react';
-import { getUserData, getPreferedName, getEmail, checkSessionActive } from '../lib/supabase';
 import "../header/headers.css";
 
-export async function Header() {
-    await checkSessionActive();
-    const email = getEmail();
-
+// Header is now a non-async, reusable component
+// Pass in email and perfName as props
+export function Header({ email, perfName }) {
     if (!email) {
         return (
             <header className="header">
@@ -26,8 +24,6 @@ export async function Header() {
         );
     }
 
-    const perfName = await getPreferedName(email);
-
     return (
         <header className="header">
             <p>User: {perfName}</p>
@@ -37,12 +33,10 @@ export async function Header() {
                     className="px-5 py-2 bg-white text-gray-400 rounded-xl text-base font-medium hover:bg-gray-400 transition">
                     Create Balloons
                 </button>
-
                 <button
                     className="px-5 py-2 bg-white text-gray-800 rounded-xl text-base font-medium hover:bg-gray-400 transition">
                     Settings
                 </button>
-
                 <button
                     className="px-5 py-2 bg-white text-gray-400 rounded-xl text-base font-medium hover:bg-gray-400 transition">
                     <a href="/auth/logout">Logout</a>

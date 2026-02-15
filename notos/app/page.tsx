@@ -1,6 +1,6 @@
 import { auth0 } from "../app/lib/auth0";
 import { loginAccount, checkSupabaseConnection } from "../app/lib/supabase";
-import { Header } from "./header/Header";
+import Header from "./header/Header";
 import ShowButtonHover from "@/components/ButtonHover";
 import Task from "../components/Task";
 import Image from "next/image";
@@ -11,7 +11,7 @@ export default async function Page() {
   if (!session) {
     return (
       <>
-        <Header />
+        <Header email={null} perfName={null} />
         {/* Redirects to Auth0 to sign up */}
         <a href="/auth/login?screen_hint=signup">Signup</a>
         <br />
@@ -24,7 +24,7 @@ export default async function Page() {
   return (
     <>
       <div>
-        <Header />
+        <Header email={session.user.email} perfName={session.user.name} />
         <p>Logged in as {session.user.email}</p>
 
         {/* Display user info (name, email, etc.) */}
