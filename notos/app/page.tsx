@@ -1,12 +1,11 @@
 import { auth0 } from "../app/lib/auth0";
 import { loginAccount, checkSupabaseConnection } from "../app/lib/supabase";
 import { Header } from "./header/Header";
+import ShowButtonHover from "@/components/ButtonHover";
+import Task from "../components/Task";
+import Image from "next/image";
 
-export default async function Home() {
-  // Check if user is authenticated
-  const session = await auth0.getSession();
-
-  if (!session) {
+  export default function Page() {
     return (
       <>
       <Header />
