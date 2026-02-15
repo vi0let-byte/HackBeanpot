@@ -41,9 +41,11 @@ export const loginAccount = async user_data => {
  * @param {string} user_ID - The email ID of the user to check.
  * @returns {Promise<boolean>} A boolean indicating if the user exists.
  */
+
 export const isActiveUser = async user_ID => {
   const { data, error } = await supabase
-    .from('users').select('').eq('emailId', user_ID);
+    .from('users').select('*').eq('emailId', user_ID);
+  console.log(error);
   const length = data ? data.length : 0;
   return length > 0;
 }

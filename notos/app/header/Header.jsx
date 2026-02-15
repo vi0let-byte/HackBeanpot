@@ -1,8 +1,6 @@
 import React from 'react';
 import "../header/headers.css";
 
-// Header is now a non-async, reusable component
-// Pass in email and perfName as props
 export function Header({ email, perfName }) {
     if (!email) {
         return (
