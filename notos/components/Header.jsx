@@ -26,24 +26,27 @@ export function Header({ email, perfName }) {
   }
 
   return (
-    <header className="header">
-      <p>User: {perfName}</p>
-      {/* Buttons */}
-      <div className="right-side">
-        <button
-          className="px-5 py-2 bg-white text-gray-400 rounded-xl text-base font-medium hover:bg-gray-400 transition"
-        >
-          Create Balloons
-        </button>
+    <div>
+      <header className="header">
+        <p>User: {perfName}</p>
+        {/* Buttons */}
+        <div className="right-side">
+          <button
+            onClick={() => addTasks()}
+            className="px-5 py-2 bg-white text-gray-400 rounded-xl text-base font-medium hover:bg-gray-400 transition"
+          >
+            Create Balloons
+          </button>
 
-        <button className="px-5 py-2 bg-white text-gray-800 rounded-xl text-base font-medium hover:bg-gray-400 transition">
-          Settings
-        </button>
+          <button className="px-5 py-2 bg-white text-gray-800 rounded-xl text-base font-medium hover:bg-gray-400 transition">
+            Settings
+          </button>
 
-        <button className="px-5 py-2 bg-white text-gray-400 rounded-xl text-base font-medium hover:bg-gray-400 transition">
-          <a href="/auth/logout">Logout</a>
-        </button>
-      </div>
-    </header>
+          <button className="px-5 py-2 bg-white text-gray-400 rounded-xl text-base font-medium hover:bg-gray-400 transition">
+            <a href="/auth/logout">Logout</a>
+          </button>
+        </div>
+      </header>
+    </div>
   );
 }

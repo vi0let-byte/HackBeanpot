@@ -20,7 +20,7 @@ export default function ({ color }: { color: string }) {
   const [isPopping, setIsPopping] = useState(false);
   const [balloonHovering, setBalloonHovering] = useState(false);
   const variants = {
-    still: { y: 0 },
+    still: { y: 0},
     moving: { y: -1000 },
   };
   return (
@@ -28,6 +28,7 @@ export default function ({ color }: { color: string }) {
       {isPopping && <ConfettiExplosion height="140vh" />}
       {!isPopping && (
         <motion.div
+        className="m-4"
           variants={variants}
           initial="still"
           animate={isAnimating ? "moving" : "still"}
