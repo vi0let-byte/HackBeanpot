@@ -3,7 +3,7 @@
 import { useState } from "react";
 import { auth0 } from "../app/lib/auth0";
 import { loginAccount, checkSupabaseConnection } from "../app/lib/supabase";
-import Header from "./header/Header";
+import { Header } from "../components/Header";
 import ShowButtonHover from "@/components/ButtonHover";
 import Task from "../components/Task";
 
