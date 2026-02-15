@@ -6,10 +6,7 @@ import {
 } from "../app/lib/supabase";
 import "../app/styles/headers.css";
 
-export async function Header() {
-  await checkSessionActive();
-  const email = getEmail();
-
+export function Header({ email, perfName }) {
   if (!email) {
     return (
       <header className="header">
@@ -27,8 +24,6 @@ export async function Header() {
       </header>
     );
   }
-
-  const perfName = await getPreferedName(email);
 
   return (
     <header className="header">
