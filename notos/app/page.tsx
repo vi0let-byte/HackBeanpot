@@ -5,6 +5,7 @@ import { loginAccount, checkSupabaseConnection } from "../app/lib/supabase";
 import { Header } from "../components/Header";
 import ShowButtonHover from "@/components/ButtonHover";
 import Task from "../components/Task";
+import { div } from "framer-motion/client";
 
 export default function Page() {
   // const session = await auth0.getSession();
@@ -23,7 +24,7 @@ export default function Page() {
 
   // return (
   //   <div>
-  //     <div className="bg-blue-300">
+  //     <div>
   //       <Header email={session.user.email} perfName={session.user.name} />
   //       <p>Logged in as {session.user.email}</p>
 
@@ -47,5 +48,5 @@ export default function Page() {
         <Task color="green" />
       </div>
     </div>
-  );
+  )
 }
