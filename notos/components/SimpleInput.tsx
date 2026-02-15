@@ -1,17 +1,18 @@
-import { FC } from 'react'
+import { FC } from "react";
 
 interface InputProps {
-  placeholder: string
+  placeholder: string;
 }
 
 const Input: FC<InputProps> = ({ placeholder }) => {
   return (
-    <div className="input-wrapper bg-green-50">
-      <textarea className="text-center w-[182px] h-[92px] bg-white"
+    <div className="input-wrapper">
+      <textarea
+        className="text-center w-45.5 h-23 bg-white"
         placeholder={placeholder}
       />
     </div>
-  )
-}
+  );
+};
 
 export default Input;
