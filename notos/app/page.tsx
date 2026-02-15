@@ -1,17 +1,19 @@
+"use client";
+
+import { useState } from "react";
 import { auth0 } from "../app/lib/auth0";
 import { loginAccount, checkSupabaseConnection } from "../app/lib/supabase";
-import { Header } from "./header/Header";
+import { Header } from "../components/Header";
 import ShowButtonHover from "@/components/ButtonHover";
 import Task from "../components/Task";
-import Image from "next/image";
 
 export default async function Page() {
   const session = await auth0.getSession();
-
   if (!session) {
     return (
       <>
-        <Header />
+        <Header
+        />
         {/* Redirects to Auth0 to sign up */}
         <a href="/auth/login?screen_hint=signup">Signup</a>
         <br />
@@ -22,9 +24,10 @@ export default async function Page() {
   }
 
   return (
-    <>
+    <div>
       <div>
-        <Header />
+        <Header
+        />
         <p>Logged in as {session.user.email}</p>
 
         {/* Display user info (name, email, etc.) */}
@@ -34,6 +37,8 @@ export default async function Page() {
         {/* Ends the session and redirects to Auth0 to log out */}
         <a href="/auth/logout">Logout</a>
       </div>
-    </>
+      <div>
+      </div>
+    </div>
   );
 }
