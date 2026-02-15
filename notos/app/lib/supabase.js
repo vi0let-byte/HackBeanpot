@@ -1,6 +1,14 @@
-import { supabase_client } from '../lib/supabaseClient';
+import { supabase_client } from './supabaseClient';
+import { auth0 } from "../lib/auth0";
+
 
 const supabase = supabase_client
+
+let email = null;
+
+export function getEmail() {
+  return email;
+}
 
 export async function checkSupabaseConnection() {
   const { data, error } = await supabase.from('users').select('')
@@ -20,6 +28,7 @@ export async function checkSupabaseConnection() {
  * @returns {Promise<string>} A message indicating the result of the login or registration process.
  */
 export const loginAccount = async user_data => {
+  email = user_data;
   const active_user = await isActiveUser(user_data);
   if (active_user) {
     return `hello ${await getPreferedName(user_data)}`;
@@ -33,7 +42,7 @@ export const loginAccount = async user_data => {
  * @param {string} user_ID - The email ID of the user to check.
  * @returns {Promise<boolean>} A boolean indicating if the user exists.
  */
-const isActiveUser = async user_ID => {
+export const isActiveUser = async user_ID => {
   const { data, error } = await supabase
     .from('users').select('').eq('emailId', user_ID);
   const length = data ? data.length : 0;
@@ -59,9 +68,9 @@ const register = async user_data => {
  * @param {*} user_email - The email ID of the user whose data is to be retrieved.
  * @returns {Promise<Object|null>} The user data if found, or null if not found.
  */
-export const getUserData = async user_email => {
+export const getUserData = async () => {  
   const { data, error } = await supabase
-    .from('users').select("*").eq('emailId', user_email);
+    .from('users').select("*").eq('emailId', email);
   return data ? data[0] : null;
 }
 
@@ -73,4 +82,24 @@ export const getUserData = async user_email => {
 export const getPreferedName = async user_email => {
     const userData = await getUserData(user_email);
     return userData ? userData.perfName : null;
+}
+
+/**
+ * Checks if the current user session is active by retrieving the session information from the authentication service. It returns the email of the user if the session is active, or null if there is no active session.
+ * @returns {Boolean} if the session is off
+ */
+export const checkSessionActive = async () => {
+  const session = await auth0.getSession();
+  console.log("Session: ", session);
+  if (!session || session === null) {
+    email = null;
+    return false;
+  }
+
+  // Update the module-level email so server renders will reflect current session
+  if (session.user && session.user.email) {
+    email = session.user.email;
+  }
+
+  return true;
 }

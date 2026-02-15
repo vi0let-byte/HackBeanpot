@@ -1,5 +1,6 @@
-import { auth0 } from "@/lib/auth0";
-import { loginAccount, checkSupabaseConnection } from "@/lib/supabase";
+import { auth0 } from "../app/lib/auth0";
+import { loginAccount, checkSupabaseConnection } from "../app/lib/supabase";
+import { Header } from "./header/Header";
 
 export default async function Home() {
   // Check if user is authenticated
@@ -8,6 +9,7 @@ export default async function Home() {
   if (!session) {
     return (
       <>
+      <Header />
         {/* Redirects to Auth0 to sign up */}
         <a href="/auth/login?screen_hint=signup">Signup</a>
         <br />
@@ -19,6 +21,8 @@ export default async function Home() {
 
   return (
     <>
+    <div>
+      <Header />
       <p>Logged in as {session.user.email}</p>
 
       {/* Display user info (name, email, etc.) */}
@@ -27,6 +31,7 @@ export default async function Home() {
 
       {/* Ends the session and redirects to Auth0 to log out */}
       <a href="/auth/logout">Logout</a>
+    </div>
     </>
   );
 }
