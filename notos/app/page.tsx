@@ -12,7 +12,8 @@ export default async function Page() {
   if (!session) {
     return (
       <>
-        <Header email={null} perfName={null} />
+        <Header
+        />
         {/* Redirects to Auth0 to sign up */}
         <a href="/auth/login?screen_hint=signup">Signup</a>
         <br />
@@ -25,7 +26,8 @@ export default async function Page() {
   return (
     <div>
       <div>
-        <Header email={session.user.email} perfName={session.user.name} />
+        <Header
+        />
         <p>Logged in as {session.user.email}</p>
 
         {/* Display user info (name, email, etc.) */}
